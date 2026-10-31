@@ -1,0 +1,8 @@
+.DS_Store
+.aicoding-chat-workspace
+.vercel-tmp/
+.scratch/
+书单_副本/
+书单/网页版/.vercel/
+__pycache__/
+*.pyc

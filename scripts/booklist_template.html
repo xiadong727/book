@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>开卷有益 · 一份够读一辈子的经典书单</title>
+<meta name="description" content="开卷有益：从源头经典到当代实用，成人书单与亲子共读书单，按分类、领域、年龄挑书。">
+<meta name="theme-color" content="#1B2838">
+<!--__PWA__-->
+<style>
+/* 配色取自笔墨纸砚：墨（深青黑）、宣纸（米白）、朱砂（印章红）、赭金（题签） */
+:root{--ink:#1B2838;--ink2:#2A3D52;--paper:#F5F0E6;--card:#FFFDF8;--line:#E4DACA;--text:#2B2620;--muted:#7D7262;
+  --cinnabar:#B23A2E;--gold:#C29A4A;--gold2:#E3C27A;--jade:#4F7A6A;--ext:#A9A39A;
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --side:292px;--toph:64px}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  color:var(--text);line-height:1.65;font-size:15px;background:var(--paper);
+  background-image:radial-gradient(rgba(140,110,60,.05) 1px,transparent 1px),radial-gradient(rgba(140,110,60,.035) 1px,transparent 1px);
+  background-size:22px 22px,13px 13px;background-position:0 0,7px 9px}
+button{font:inherit;color:inherit}
+::selection{background:#EED9B0}
+
+/* ---------- 顶栏 ---------- */
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;color:#fff;
+  padding:9px 20px;padding-top:max(9px,env(safe-area-inset-top));border-bottom:2px solid var(--gold);transition:border-color .3s}
+.top::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--ink) 0%,var(--ink2) 100%);
+  box-shadow:0 2px 14px rgba(27,40,56,.18);transition:opacity .3s}
+/* 卷首在屏时顶栏透明，按钮和搜索框直接浮在墨色卷首上；滚过卷首后才显出底色、金边和阴影 */
+body.at-top .top{border-bottom-color:transparent}
+body.at-top .top::before{opacity:0}
+.menu{position:relative;flex:none;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;letter-spacing:1px;line-height:1;
+  color:var(--gold2);background:rgba(194,154,74,.08);border:1px solid rgba(227,194,122,.45);border-radius:999px;padding:6px 12px 6px 9px;
+  animation:breathe 2.8s ease-in-out infinite;transition:background .2s}
+.menu .ic{width:14px;height:14px;display:block}
+.menu:hover{background:rgba(194,154,74,.2)}
+/* 呼吸灯：侧栏收起时边框和光晕轻轻明暗，提示这里能筛选；展开后停下 */
+@keyframes breathe{
+  0%,100%{box-shadow:0 0 0 0 rgba(227,194,122,0);border-color:rgba(227,194,122,.4)}
+  50%{box-shadow:0 0 0 3px rgba(227,194,122,.1),0 0 10px rgba(227,194,122,.3);border-color:rgba(227,194,122,.85)}}
+body.open .menu{animation:none;background:var(--gold);color:var(--ink);border-color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.menu{animation:none}}
+.brand{flex:1 1 auto;min-width:0;display:flex;align-items:center}
+.brand .name{flex:none;font-family:var(--serif);font-size:17px;letter-spacing:3px;line-height:1.2;white-space:nowrap;color:#FFF8E6}
+/* 卷首在屏时大标题已经写了书名，顶栏只留筛选和搜索；往下滚过卷首，书名和本数再淡入 */
+.brand .txt{min-width:0;display:flex;align-items:baseline;gap:12px;transition:opacity .3s,transform .3s}
+body.at-top .brand .txt{opacity:0;transform:translateY(6px);pointer-events:none}
+.counts{min-width:0;font-size:12px;color:rgba(255,255,255,.62);letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.counts b{color:var(--gold2);font-weight:600;margin:0 2px}
+/* 搜索框平时收窄，点进去再展宽 */
+.search{flex:0 1 210px;min-width:0;position:relative;transition:flex-basis .25s ease}
+.search:focus-within{flex-basis:300px}
+.search input{width:100%;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 12px 6px 30px;font-size:13px;line-height:1.3;
+  color:#fff;background:rgba(255,255,255,.07);outline:none;transition:background .2s,border-color .2s}
+.search input:hover{border-color:rgba(227,194,122,.45)}
+.search input::placeholder{color:rgba(255,255,255,.45)}
+.search input:focus{background:#fff;color:var(--text);border-color:var(--gold)}
+.search input:focus::placeholder{color:#aaa}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;opacity:.55;pointer-events:none}
+.search input:focus+svg{opacity:.45;filter:invert(1)}
+/* 关注公众号：顶栏右侧一枚朱砂小签，点开弹出二维码 */
+.follow{flex:none;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;letter-spacing:1px;line-height:1;
+  color:#FFF8E6;background:var(--cinnabar);border:1px solid rgba(243,217,200,.35);border-radius:999px;padding:6px 12px 6px 10px;transition:filter .2s}
+.follow:hover{filter:brightness(1.12)}
+.follow .ic{width:14px;height:14px;display:block}
+
+/* ---------- 左侧边栏 ---------- */
+.side{position:fixed;left:0;top:var(--toph);bottom:0;z-index:20;width:var(--side);display:flex;flex-direction:column;
+  background:#FBF7EE;border-right:1px solid var(--line);box-shadow:4px 0 18px rgba(60,40,10,.06);
+  transform:translateX(-100%);transition:transform .25s ease;visibility:hidden}
+body.open .side{transform:none;visibility:visible}
+.side-body{flex:1;overflow-y:auto;padding:18px 16px 24px;-webkit-overflow-scrolling:touch}
+.side h4{display:flex;align-items:center;gap:8px;margin:20px 0 8px;font-family:var(--serif);font-size:15px;color:var(--ink);letter-spacing:2px}
+.side h4::before{content:"";width:4px;height:14px;background:var(--cinnabar);border-radius:1px}
+.side h4 small{font-family:inherit;font-size:12px;color:var(--muted);letter-spacing:0;font-weight:normal}
+.side h4:first-child{margin-top:0}
+.kind{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kind button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 6px;cursor:pointer;font-size:14px;
+  line-height:1.35;font-family:var(--serif);font-weight:600;transition:all .2s}
+.kind button small{display:block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:12px;color:var(--muted);font-weight:normal}
+.kind button.on{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 3px 10px rgba(27,40,56,.22)}
+.kind button.on small{color:var(--gold2)}
+.opts{display:flex;flex-direction:column;gap:1px}
+.opt{position:relative;display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;border-radius:8px;padding:7px 12px;
+  cursor:pointer;text-align:left;font-size:14px;transition:background .15s}
+.opt:hover{background:#F1E9DA}
+.opt.on{background:#EFE4CF;color:var(--ink);font-weight:600}
+.opt.on::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--cinnabar)}
+.opt .n{margin-left:auto;font-size:12px;color:var(--muted);font-weight:normal;font-variant-numeric:tabular-nums}
+.side-note{margin-top:22px;padding:12px 14px;border:1px dashed var(--line);border-radius:10px;font-size:12px;color:var(--muted);background:var(--card)}
+.side-note p{margin:0 0 6px}.side-note p:last-child{margin:0}
+.side-foot{display:none;padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.side-foot button{width:100%;border:0;border-radius:999px;background:var(--ink);color:#fff;padding:11px;font-size:15px;cursor:pointer;letter-spacing:1px}
+.mask{display:none}
+
+/* ---------- 卷首：上接顶栏连成一片墨色，底部远山渐渐融进宣纸 ---------- */
+main{padding:4px 24px 48px;transition:padding-left .25s ease}
+.inner{max-width:1200px;margin:0 auto}
+@media (min-width:901px){body.open main,body.open .hero{padding-left:calc(var(--side) + 24px)}}
+.hero{position:relative;overflow:hidden;margin-top:calc(-1 * var(--toph));padding:calc(var(--toph) + 30px) 24px 112px;color:#F5F0E6;
+  transition:padding-left .25s ease;background:linear-gradient(90deg,var(--ink) 0%,var(--ink2) 100%)}
+/* 云月：墨色夜空里一轮淡金明月，两缕金线祥云缓缓飘过，取「月下读书」之意 */
+.hero svg.moon{position:absolute;right:9%;top:calc(var(--toph) + 24px);width:240px;height:170px;pointer-events:none}
+.hero svg.moon .cloud{animation:drift 16s ease-in-out infinite alternate}
+.hero svg.moon .cloud.b{animation-duration:12s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translateX(-6px)}to{transform:translateX(8px)}}
+@media (prefers-reduced-motion:reduce){.hero svg.moon .cloud{animation:none}}
+/* 中等宽度副标题会铺到右侧，月亮缩小并收到右上角，只占书名那一行的高度 */
+@media (max-width:1100px){.hero svg.moon{width:150px;height:106px;right:3%;top:calc(var(--toph) + 4px)}}
+.hero-in{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+.hero svg.hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:150px;pointer-events:none}
+.hero h1{margin:0;font-family:var(--serif);font-size:68px;font-weight:700;letter-spacing:18px;line-height:1.15;
+  color:#F3D99A;background:linear-gradient(180deg,#FFF8E6 0%,#F3D99A 45%,#C99B45 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 0 #8C6A2C) drop-shadow(0 2px 0 #6E5222) drop-shadow(0 3px 0 #523C18) drop-shadow(0 12px 18px rgba(0,0,0,.45))}
+.hero p.sub{margin:14px 0 0;font-family:var(--serif);font-size:17px;color:rgba(245,240,230,.82);letter-spacing:2px}
+.nums{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.num{border:0;text-align:left;cursor:pointer;min-width:118px;padding:10px 16px;border-radius:12px;color:inherit;
+  background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(227,194,122,.28);backdrop-filter:blur(2px);
+  transition:transform .15s,box-shadow .15s,background .15s}
+.num:hover{transform:translateY(-2px);background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px var(--gold2),0 6px 16px rgba(0,0,0,.25)}
+.num.on{background:rgba(227,194,122,.14);box-shadow:inset 0 0 0 1.5px var(--gold2)}
+.num b{display:block;font-family:var(--serif);font-size:28px;line-height:1.2;color:#FFF8E6}
+.num span{font-size:12px;color:rgba(245,240,230,.62);letter-spacing:1px}
+.quote{margin:24px 0 0;max-width:30em;padding-left:14px;border-left:3px solid var(--gold);
+  font-family:var(--serif);font-size:15px;color:rgba(245,240,230,.88)}
+.quote cite{display:block;font-style:normal;font-size:13px;color:rgba(245,240,230,.55);margin-top:2px}
+/* 署名：卷首右下角两行小字配一方朱印，和海报一致；点它也能打开二维码 */
+.sign{position:absolute;right:0;bottom:0;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;cursor:pointer;color:inherit;text-align:right}
+.sign .t{display:flex;flex-direction:column;font-family:var(--serif);line-height:1.45}
+.sign .t small{font-size:12px;color:rgba(245,240,230,.5);letter-spacing:2px}
+.sign .t span{font-size:15px;color:rgba(245,240,230,.9);letter-spacing:1px}
+/* 印文从右列读起：direction:rtl 让第一列排在右边，按列填字 */
+.seal{flex:none;display:grid;grid-template:1fr 1fr/1fr 1fr;grid-auto-flow:column;direction:rtl;place-items:center;width:48px;height:48px;padding:4px;
+  border-radius:6px;background:var(--cinnabar);box-shadow:inset 0 0 0 3px var(--cinnabar),inset 0 0 0 4px rgba(243,217,200,.8);
+  font-family:var(--serif);font-weight:700;font-size:17px;line-height:1;color:#FFF8E6;font-style:normal}
+.seal i{font-style:normal}
+
+/* ---------- 书单 ---------- */
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px;font-size:14px;color:var(--muted)}
+.bar b{color:var(--ink);font-family:var(--serif);font-size:16px}
+.bar a{color:var(--cinnabar);cursor:pointer;text-decoration:none;border-bottom:1px dashed currentColor;font-size:13px}
+.hint{margin:0 0 20px;padding:12px 16px;border-radius:10px;background:var(--card);border:1px solid var(--line);
+  border-left:4px solid var(--gold);font-size:14px}
+section.group{margin-bottom:34px}
+.group>h2{display:flex;align-items:center;gap:12px;margin:0 0 6px;font-family:var(--serif);font-size:22px;color:var(--ink);letter-spacing:2px}
+.group>h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold) 0%,rgba(194,154,74,0) 85%)}
+.group>h2 small{font-family:-apple-system,"PingFang SC",sans-serif;font-weight:normal;color:var(--muted);font-size:13px;letter-spacing:0}
+.desc{color:var(--muted);font-size:13px;margin:0 0 14px;max-width:62em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:12px}
+.card{position:relative;display:flex;flex-direction:column;gap:6px;padding:16px 18px 14px;border-radius:12px;background:var(--card);
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(60,40,10,.04);transition:transform .18s,box-shadow .18s,border-color .18s}
+.card::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--ext)}
+.card.必读::before{background:var(--cinnabar)}.card.推荐::before{background:var(--gold)}
+.card:hover{transform:translateY(-2px);border-color:#D8C9AE;box-shadow:0 8px 22px rgba(60,40,10,.09)}
+.card .top-row{display:flex;align-items:flex-start;gap:8px}
+.card h3{margin:0;flex:1;font-family:var(--serif);font-size:18px;line-height:1.45;color:var(--ink)}
+.lv{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:normal;line-height:1.5;
+  border-radius:3px;padding:0 5px;margin-right:6px;vertical-align:3px;border:1px solid}
+.lv.必读{color:var(--cinnabar);border-color:var(--cinnabar);background:#FBEDE9}
+.lv.推荐{color:#94702A;border-color:var(--gold);background:#FBF3E2}
+.lv.拓展{color:#7C766D;border-color:#C9C2B6;background:#F4F1EC}
+.mark{font-family:-apple-system,"PingFang SC",sans-serif;font-size:12px;font-weight:normal;color:var(--muted);margin-left:4px}
+.by{color:var(--muted);font-size:13px}
+.core{font-size:14.5px;color:#3A332A}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--muted);margin-top:2px}
+.tags span{background:#F4EEE3;border-radius:4px;padding:1px 8px}
+.stars{color:#C9962B;letter-spacing:1px}.stars em{color:#DCD3C3;font-style:normal}
+details{font-size:13px;color:#4B4235;border-top:1px dashed var(--line);padding-top:7px;margin-top:4px}
+details summary{cursor:pointer;color:var(--jade);font-size:13px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"＋ ";font-weight:600}
+details[open] summary::before{content:"－ "}
+details p{margin:5px 0}
+.kv{font-size:13.5px;margin:0}.kv b{color:var(--muted);font-weight:normal}
+.empty{color:var(--muted);text-align:center;padding:70px 0;font-family:var(--serif);font-size:16px}
+.empty a{color:var(--cinnabar);cursor:pointer;font-size:14px}
+.foot{text-align:center;color:var(--muted);font-family:var(--serif);font-size:13px;letter-spacing:2px;padding:10px 0 0}
+/* 页尾关注卡：墨色底、金边，和卷首呼应 */
+.follow-card{display:flex;align-items:center;gap:22px;max-width:620px;margin:20px auto 18px;padding:20px 24px;border-radius:16px;color:#F5F0E6;
+  background:linear-gradient(90deg,var(--ink) 0%,var(--ink2) 100%);box-shadow:inset 0 0 0 1px rgba(227,194,122,.45),0 10px 28px rgba(27,40,56,.18)}
+.follow-card img{flex:none;width:132px;height:132px;border-radius:10px;background:#fff;padding:4px;box-shadow:0 0 0 2px var(--gold)}
+.follow-card small{display:block;font-size:12px;color:var(--gold2);letter-spacing:3px}
+.follow-card b{display:block;margin:2px 0 6px;font-family:var(--serif);font-size:26px;letter-spacing:6px;color:#FFF8E6}
+.follow-card p{margin:0;font-size:14px;color:rgba(245,240,230,.85)}
+.follow-card p em{font-style:normal;color:var(--gold2);font-weight:600}
+.follow-card p.tip{margin-top:6px;font-size:12px;color:rgba(245,240,230,.5)}
+/* 二维码弹窗 */
+.wx{border:0;padding:0;border-radius:18px;max-width:min(92vw,340px);background:var(--card);color:var(--text);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.wx::backdrop{background:rgba(20,26,36,.55)}
+.wx .in{position:relative;padding:26px 26px 22px;text-align:center}
+.wx .x{position:absolute;right:10px;top:8px;border:0;background:none;font-size:24px;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px}
+.wx small{font-size:12px;color:var(--gold);letter-spacing:3px}
+.wx h3{margin:2px 0 14px;font-family:var(--serif);font-size:24px;letter-spacing:6px;color:var(--ink)}
+.wx img{display:block;width:220px;height:220px;margin:0 auto;border-radius:10px;box-shadow:0 0 0 1px var(--line)}
+.wx p{margin:14px 0 0;font-size:14px}
+.wx p em{font-style:normal;color:var(--cinnabar);font-weight:600}
+.wx p.tip{margin-top:4px;font-size:12px;color:var(--muted)}
+
+@media (max-width:900px){
+  :root{--side:min(86vw,320px)}
+  .side{z-index:40;top:0;padding-top:env(safe-area-inset-top);box-shadow:6px 0 28px rgba(0,0,0,.2)}
+  .side-foot{display:block}
+  .mask{display:block;position:fixed;inset:0;z-index:35;background:rgba(20,26,36,.45);opacity:0;pointer-events:none;transition:opacity .25s}
+  body.open .mask{opacity:1;pointer-events:auto}
+  body.open{overflow:hidden}
+}
+@media (max-width:640px){
+  .top{padding:8px 14px;padding-top:max(8px,env(safe-area-inset-top));gap:10px}
+  .brand .name{font-size:16px;letter-spacing:2px}.counts{display:none}
+  .search{flex:0 1 150px}.search:focus-within{flex-basis:220px}
+  main{padding:0 12px 36px}
+  .hero{padding:calc(var(--toph) + 18px) 16px 84px}
+  .hero svg.moon{width:120px;height:85px;right:6px;top:calc(var(--toph) + 6px)}
+  .hero svg.hills{height:90px}
+  .hero h1{font-size:44px;letter-spacing:10px}
+  .hero p.sub{font-size:14px;margin-top:8px;letter-spacing:1px}
+  .nums{gap:8px;margin-top:14px}.num{flex:1 1 40%;min-width:0;padding:6px 12px}.num b{font-size:22px}
+  .num.minor{display:none}
+  .quote{margin-top:14px;font-size:14px}
+  .sign{position:static;margin:14px 0 0 auto}
+  .follow-card{gap:16px;padding:16px;margin-top:12px}.follow-card img{width:108px;height:108px}.follow-card b{font-size:22px}
+  .grid{grid-template-columns:1fr}
+  .group>h2{font-size:20px}
+}
+@media (max-width:370px){.follow{padding:6px 9px}.follow span{display:none}}
+@media print{.top,.side,.mask,.hero .nums,.hero svg.hills,.hero svg.moon,.follow-card,.wx{display:none!important}main{padding:0!important}.card{break-inside:avoid}details{display:none}
+  .hero{background:none;color:var(--text);margin:0;padding:0 0 12px}.hero h1{background:none;-webkit-text-fill-color:var(--ink);color:var(--ink);filter:none}
+  .hero p.sub,.quote,.quote cite,.sign .t small,.sign .t span{color:var(--muted)}}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <button class="menu" id="menu" aria-controls="side" aria-expanded="false" title="分类与筛选">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>筛选</button>
+  <div class="brand">
+    <div class="txt"><div class="name">开卷有益</div><div class="counts" id="counts"></div></div>
+  </div>
+  <label class="search"><input type="search" id="q" placeholder="搜书名、作者…">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></label>
+  <button class="follow" data-follow title="关注公众号「__WECHAT_NAME__」">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 7 0 0 1-11.6 6.3L4 20l1.3-3.6A7 7 0 0 1 4 12a8 7 0 0 1 16 0z"/><path d="M9 11.5h.01M12 11.5h.01M15 11.5h.01"/></svg><span>关注</span></button>
+</header>
+
+<aside class="side" id="side" aria-label="分类与筛选">
+  <div class="side-body" id="side-body"></div>
+  <div class="side-foot"><button id="done"></button></div>
+</aside>
+<div class="mask" id="mask"></div>
+
+<section class="hero">
+  <!-- 云月：一轮明月、两缕祥云，云的填色与夜空同色，遮住月边即成「云遮月」 -->
+  <svg class="moon" viewBox="0 0 240 170" aria-hidden="true">
+    <defs><radialGradient id="mg" cx="38%" cy="34%" r="72%"><stop offset="0" stop-color="#FFF8E6"/><stop offset=".55" stop-color="#F3D99A"/><stop offset="1" stop-color="#C99B45"/></radialGradient>
+      <filter id="mh" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter></defs>
+    <circle cx="130" cy="74" r="66" fill="#E3C27A" opacity=".22" filter="url(#mh)"/>
+    <circle cx="130" cy="74" r="46" fill="url(#mg)" opacity=".92"/>
+    <circle cx="114" cy="62" r="9" fill="#B88A3A" opacity=".12"/><circle cx="146" cy="90" r="6" fill="#B88A3A" opacity=".1"/><circle cx="140" cy="56" r="4" fill="#B88A3A" opacity=".1"/>
+    <g fill="#283A4F" stroke="#E3C27A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <g class="cloud"><path d="M44 124C44 110 62 104 72 112C76 96 100 94 108 108C114 100 130 102 132 114C142 110 156 114 156 124Z" stroke-opacity=".75"/>
+        <path d="M156 124H212M44 124H30C20 124 18 114 26 112C31 111 33 116 30 118" fill="none" stroke-opacity=".5"/></g>
+      <g class="cloud b"><path d="M168 56C168 46 178 42 184 47C188 38 202 39 204 48C212 46 220 50 220 56Z" stroke-opacity=".6"/>
+        <path d="M220 56H234M160 56H168" fill="none" stroke-opacity=".4"/></g>
+    </g>
+  </svg>
+  <!-- 远山三叠：取“书山”之意；最前一叠就是宣纸色，墨色卷首顺着山势落到书单里 -->
+  <svg class="hills" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150 L0 92 C120 70 220 40 340 52 C460 64 520 18 660 14 C800 10 860 66 1000 58 C1140 50 1240 8 1440 20 L1440 150Z" fill="#F5F0E6" opacity=".08"/>
+    <path d="M0 150 L0 116 C140 96 260 84 380 92 C500 100 580 56 720 52 C860 48 940 92 1080 86 C1220 80 1320 60 1440 64 L1440 150Z" fill="#F5F0E6" opacity=".16"/>
+    <path d="M0 150 L0 132 C160 118 300 108 440 114 C580 120 680 96 820 98 C960 100 1060 122 1200 116 C1300 112 1380 104 1440 106 L1440 150Z" fill="#F5F0E6"/>
+  </svg>
+  <div class="hero-in">
+    <h1 id="hero-t">开卷有益</h1>
+    <p class="sub">一份够读一辈子的经典书单 —— 从源头经典到当代实用，给大人，也给孩子</p>
+    <div class="nums" id="nums"></div>
+    <blockquote class="quote" id="quote"></blockquote>
+    <button class="sign" data-follow title="关注公众号">
+      <span class="t"><small>编选整理</small><span>公众号 · __WECHAT_NAME__</span></span>
+      <span class="seal" aria-hidden="true"><i>天</i><i>迟</i><i>同</i><i>学</i></span></button>
+  </div>
+</section>
+
+<main><div class="inner">
+  <div class="bar" id="bar"></div>
+  <div id="list"></div>
+  <section class="follow-card">
+    <img src="__WXQR__" alt="公众号「__WECHAT_NAME__」二维码" width="132" height="132" loading="lazy">
+    <div><small>关注公众号</small><b>__WECHAT_NAME__</b>
+      <p>回复「<em>__WECHAT_KEY__</em>」，领取可打印的 Excel 完整版和高清长图</p>
+      <p class="tip">微信里长按二维码识别，电脑上用微信扫一扫</p></div>
+  </section>
+  <p class="foot">书山有路勤为径 · 学海无涯苦作舟</p>
+</div></main>
+
+<dialog class="wx" id="wx" aria-label="关注公众号">
+  <div class="in">
+    <button class="x" data-close aria-label="关闭">×</button>
+    <small>关注公众号</small>
+    <h3>__WECHAT_NAME__</h3>
+    <img src="__WXQR__" alt="公众号「__WECHAT_NAME__」二维码" width="220" height="220">
+    <p>回复「<em>__WECHAT_KEY__</em>」，领取可打印的 Excel 完整版和高清长图</p>
+    <p class="tip">微信里长按识别，电脑上用微信扫一扫</p>
+  </div>
+</dialog>
+
+<script>
+const D = /*__DATA__*/;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const THEME = Object.fromEntries(D.themes.map(t => [t.name, t]));
+const DOMAIN = Object.fromEntries(D.domains.map(d => [d.name, d]));
+// 亲子书单：前几档按年龄分，后面是专题；年龄筛选按每本书标注的阅读年龄算，专题书也能按年龄筛
+const AGES = [["3-6岁", 3, 6], ["6-9岁", 6, 9], ["9-12岁", 9, 12], ["12-15岁", 12, 15], ["15岁+", 15, 99]];
+const AGE_BANDS = D.bands.filter(b => /^\d/.test(b.name)).map(b => b.name);
+const KID_CATS = [["分龄经典", "📚", k => AGE_BANDS.includes(k.band)],
+  ...D.bands.filter(b => !AGE_BANDS.includes(b.name)).map(b => [b.name.split("｜")[0], b.emoji, k => k.band === b.name])];
+const QUOTES = [
+  ["读书破万卷，下笔如有神。", "杜甫《奉赠韦左丞丈二十二韵》"],
+  ["旧书不厌百回读，熟读深思子自知。", "苏轼《送安惇秀才失解西归》"],
+  ["纸上得来终觉浅，绝知此事要躬行。", "陆游《冬夜读书示子聿》"],
+  ["问渠那得清如许？为有源头活水来。", "朱熹《观书有感》"],
+  ["粗缯大布裹生涯，腹有诗书气自华。", "苏轼《和董传留别》"],
+  ["少而好学，如日出之阳；壮而好学，如日中之光；老而好学，如秉烛之明。", "刘向《说苑》"],
+];
+const S = {kind: "adult", q: "", theme: "", domain: "", age: "", cat: ""};
+
+function stars(n) { return `<span class="stars">${"★".repeat(n)}<em>${"★".repeat(5 - n)}</em></span>`; }
+function fitAge(k, [, lo, hi]) { return k.ageMin < hi && (k.ageMax ?? 99) > lo; }
+function match(q, fields) { return !q || fields.join(" ").toLowerCase().includes(q); }
+
+/* ---------- 顶栏与卷首 ---------- */
+function renderHead() {
+  $("#counts").innerHTML = `成人书单<b>${D.books.length}</b>本 · 亲子共读<b>${D.kids.length}</b>本`;
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  $("#quote").innerHTML = `${esc(q[0])}<cite>—— ${esc(q[1])}</cite>`;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => document.body.classList.toggle("at-top", e.isIntersecting), {rootMargin: `-${$("#top").offsetHeight}px 0px 0px 0px`})
+      .observe($("#hero-t"));
+  }
+}
+function renderNums() {
+  const n = (kind, b, label, minor) => `<button class="num${minor ? " minor" : S.kind === kind ? " on" : ""}" data-kind="${kind}"><b>${b}</b><span>${label}</span></button>`;
+  $("#nums").innerHTML = n("adult", D.books.length, "成人书单 · 本") + n("adult", D.domains.length, `领域 · ${D.themes.length} 大分类`, true) +
+    n("kids", D.kids.length, "亲子共读 · 本") + n("kids", KID_CATS.length - 1, `亲子专题 · ${AGES.length} 档年龄`, true);
+}
+
+/* ---------- 左侧边栏 ---------- */
+function opt(group, value, label, n, on) {
+  return `<button class="opt${on ? " on" : ""}" data-g="${group}" data-v="${esc(value)}">${label}<span class="n">${n}</span></button>`;
+}
+function renderSide() {
+  const kind = `<h4>书单</h4><div class="kind">
+    <button data-kind="adult" class="${S.kind === "adult" ? "on" : ""}">成人书单<small>${D.books.length} 本</small></button>
+    <button data-kind="kids" class="${S.kind === "kids" ? "on" : ""}">亲子共读<small>${D.kids.length} 本</small></button></div>`;
+  let body;
+  if (S.kind === "adult") {
+    const domains = S.theme ? THEME[S.theme].domains.map(d => DOMAIN[d]) : D.domains;
+    const total = S.theme ? THEME[S.theme].count : D.books.length;
+    body = `<h4>分类</h4><div class="opts">${opt("theme", "", "全部分类", D.books.length, !S.theme)}
+        ${D.themes.map(t => opt("theme", t.name, `${t.emoji} ${esc(t.name)}`, t.count, S.theme === t.name)).join("")}</div>
+      <h4>领域${S.theme ? `<small>· ${esc(S.theme)}</small>` : ""}</h4><div class="opts">${opt("domain", "", "全部领域", total, !S.domain)}
+        ${domains.map(d => opt("domain", d.name, `${d.emoji} ${esc(d.name)}`, d.count, S.domain === d.name)).join("")}</div>
+      <div class="side-note"><p><b>必读</b>：各领域绕不开的源头或入门书；<b>推荐</b>：读完必读后最值得读的；<b>拓展</b>：有兴趣再读。</p>
+        <p>${esc(D.meta.positionNote)}</p><p>★ 越多越难读；📚 是语文课内必读。</p></div>`;
+  } else {
+    body = `<h4>年龄</h4><div class="opts">${opt("age", "", "全部年龄", D.kids.length, !S.age)}
+        ${AGES.map(a => opt("age", a[0], esc(a[0]), D.kids.filter(k => fitAge(k, a)).length, S.age === a[0])).join("")}</div>
+      <h4>分类</h4><div class="opts">${opt("cat", "", "全部分类", D.kids.length, !S.cat)}
+        ${KID_CATS.map(([name, e, f]) => opt("cat", name, `${e} ${esc(name)}`, D.kids.filter(f).length, S.cat === name)).join("")}</div>
+      <div class="side-note"><p>🔖 是这一组先读的书；${D.meta.familyMark} 适合全家一起读；📚 是语文课内必读。</p>
+        <p>${esc(D.meta.mediaNote)}</p></div>`;
+  }
+  $("#side-body").innerHTML = kind + body;
+}
+
+/* ---------- 书单列表 ---------- */
+function bookCard(b) {
+  return `<article class="card ${b.level}">
+    <div class="top-row"><h3><span class="lv ${b.level}">${b.level}</span>《${esc(b.title)}》${b.textbook ? `<span class="mark">📚 ${esc(b.textbook)}</span>` : ""}</h3></div>
+    <div class="by">${esc(b.author)} · ${esc(b.era)} · ${esc(b.region)}</div>
+    <div class="core">${esc(b.core)}</div>
+    <div class="tags">${stars(b.diff)}<span>${esc(b.position)}</span><span>篇幅 ${b.length}</span><span>约 ${b.weeks} 周</span>${b.media ? `<span>📺 有影视</span>` : ""}</div>
+    <details><summary>推荐版本与阅读建议</summary>
+      <p><b>推荐版本：</b>${esc(b.edition)}</p><p><b>阅读建议：</b>${esc(b.tip)}</p>
+      ${b.bridge ? `<p><b>读不动？先读：</b>《${esc(b.bridge[0])}》：${esc(b.bridge[1])}</p>` : ""}
+      ${b.media ? `<p><b>书影对照：</b>${esc(b.media)}</p>` : ""}</details>
+  </article>`;
+}
+function kidCard(k) {
+  return `<article class="card${k.must ? " 必读" : ""}">
+    <div class="top-row"><h3>${k.must ? `<span class="lv 必读">🔖 必读</span>` : ""}《${esc(k.title)}》${k.family ? `<span class="mark" title="全家共读">${D.meta.familyMark}</span>` : ""}${k.textbook ? `<span class="mark">📚 ${esc(k.textbook)}</span>` : ""}</h3>
+      <span class="tags"><span>${esc(k.age)}</span></span></div>
+    <div class="by">${esc(k.author)}</div>
+    <p class="kv"><b>怎么共读：</b>${esc(k.play)}</p>
+    ${k.next !== "—" ? `<p class="kv"><b>长大后接着读：</b>${esc(k.next)}</p>` : ""}
+    <details><summary>中文版本与英文版</summary><p><b>中文版：</b>${esc(k.cn)}</p><p><b>英文版/类型：</b>${esc(k.en)}</p>
+      ${k.media ? `<p><b>书影对照：</b>${esc(k.media)}</p>` : ""}</details>
+  </article>`;
+}
+function adultList(q) {
+  const hit = D.books.filter(b => (!S.theme || b.theme === S.theme) && (!S.domain || b.domain === S.domain) &&
+    match(q, [b.title, b.author, b.core, b.tip, b.region, b.era, b.theme, b.domain, b.position, b.media]));
+  const th = THEME[S.theme];
+  const hint = th && !S.domain && !q ? `<p class="hint">${th.emoji} <b>${esc(th.name)}</b>：${th.domains.map(esc).join("、")}，共 ${th.count} 本；不知从哪开始，先读《${esc(th.first)}》</p>` : "";
+  const html = hint + D.domains.map(d => {
+    const books = hit.filter(b => b.domain === d.name);
+    return books.length ? `<section class="group"><h2>${d.emoji} ${esc(d.name)}<small>${books.length} 本</small></h2>
+      <div class="grid">${books.map(bookCard).join("")}</div></section>` : "";
+  }).join("");
+  return [hit.length, html];
+}
+function kidsList(q) {
+  const age = AGES.find(a => a[0] === S.age), cat = KID_CATS.find(c => c[0] === S.cat);
+  const hit = D.kids.filter(k => (!age || fitAge(k, age)) && (!cat || cat[2](k)) &&
+    match(q, [k.title, k.author, k.play, k.en, k.cn, k.next, k.media, k.age]));
+  const html = D.bands.map(b => {
+    const kids = hit.filter(k => k.band === b.name);
+    return kids.length ? `<section class="group"><h2>${b.emoji} ${esc(b.name)}<small>${kids.length} 本</small></h2>
+      <p class="desc">${esc(b.desc)}</p><div class="grid">${kids.map(kidCard).join("")}</div></section>` : "";
+  }).join("");
+  return [hit.length, html];
+}
+function render(scroll) {
+  const q = S.q.trim().toLowerCase();
+  const [n, html] = S.kind === "adult" ? adultList(q) : kidsList(q);
+  const filters = S.kind === "adult" ? [S.theme, S.domain] : [S.age, S.cat];
+  const active = filters.some(Boolean) || q;
+  const path = [S.kind === "adult" ? "成人书单" : "亲子共读", ...filters.filter(Boolean)].join(" › ");
+  $("#bar").innerHTML = `<b>${esc(path)}</b><span>共 ${n} 本${q ? `，含“${esc(S.q.trim())}”` : ""}</span>${active ? `<a data-clear>清除筛选</a>` : ""}`;
+  $("#list").innerHTML = n ? html : `<div class="empty">没有符合条件的书<br><a data-clear>清除筛选</a></div>`;
+  $("#done").textContent = `查看 ${n} 本书`;
+  renderNums();
+  renderSide();
+  if (scroll) scrollTo(0, Math.min(scrollY, $("#bar").offsetTop - $("#top").offsetHeight - 8));
+}
+
+/* ---------- 交互 ---------- */
+const mobile = () => matchMedia("(max-width:900px)").matches;
+function setOpen(open) {
+  document.body.classList.toggle("open", open);
+  $("#menu").setAttribute("aria-expanded", open);
+}
+function syncTop() { document.documentElement.style.setProperty("--toph", Math.ceil($("#top").getBoundingClientRect().height) + "px"); }
+function setKind(kind) { if (kind !== S.kind) Object.assign(S, {kind, theme: "", domain: "", age: "", cat: ""}); }
+
+$("#menu").addEventListener("click", () => setOpen(!document.body.classList.contains("open")));
+$("#mask").addEventListener("click", () => setOpen(false));
+$("#done").addEventListener("click", () => setOpen(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && mobile()) setOpen(false); });
+$("#side-body").addEventListener("click", e => {
+  const k = e.target.closest("[data-kind]"), o = e.target.closest(".opt");
+  if (k) setKind(k.dataset.kind);
+  else if (o) {
+    const {g, v} = o.dataset;
+    if (g === "theme") Object.assign(S, {theme: v, domain: ""});
+    else if (g === "domain") Object.assign(S, {domain: v, theme: v ? DOMAIN[v].theme : S.theme});
+    else S[g] = v;
+  } else return;
+  render(true);
+});
+$("#nums").addEventListener("click", e => {
+  const k = e.target.closest("[data-kind]");
+  if (!k) return;
+  setKind(k.dataset.kind);
+  render();
+  scrollTo({top: $("#bar").offsetTop - $("#top").offsetHeight - 8, behavior: "smooth"});
+});
+document.querySelector("main").addEventListener("click", e => {
+  if (!e.target.closest("[data-clear]")) return;
+  Object.assign(S, {q: "", theme: "", domain: "", age: "", cat: ""});
+  $("#q").value = "";
+  render(true);
+});
+$("#q").addEventListener("input", e => { S.q = e.target.value; render(); });
+// 关注公众号弹窗：顶栏按钮和卷首署名都能打开；点 × 或弹窗外的遮罩关闭
+const wx = $("#wx");
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-follow]")) wx.showModal ? wx.showModal() : wx.setAttribute("open", "");
+  else if (e.target === wx || e.target.closest("[data-close]")) wx.close ? wx.close() : wx.removeAttribute("open");
+});
+// 卷首要铺到顶栏下面，顶栏一变高（本数填入、字体加载、换行）就要重新量
+"ResizeObserver" in window ? new ResizeObserver(syncTop).observe($("#top")) : addEventListener("resize", syncTop);
+renderHead();
+syncTop();
+render();
+
+if (/^https?:$/.test(location.protocol) && "serviceWorker" in navigator && $('link[rel="manifest"]'))
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
